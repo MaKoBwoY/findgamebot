@@ -86,7 +86,7 @@ class matchmaking(commands.Cog):
             command_text += game
             command_text += " " * (align-len(game)) + "`"
             if (len(gamesNames) == len(games) and len(gamesNames[index])):
-                command_text += " : Pour jouer "
+                command_text += " : pour "
                 command_text += common.indefinite_article(gamesNames[index]) + " "
                 command_text += "**" + gamesNames[index] + "**."
             command_text += "\n"
