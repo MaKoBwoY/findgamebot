@@ -147,7 +147,7 @@ class matchmaking(commands.Cog):
         embed.set_author(name=ctx.message.author.display_name,
                          icon_url=author_avatar)
 
-        embed.title = "Qui pour"
+        embed.title = "Qui pour "
         embed.title += common.indefinite_article(gameWanted)
 
         if (not(len(gameIcon))):
