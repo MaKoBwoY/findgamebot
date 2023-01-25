@@ -67,9 +67,7 @@ class matchmaking(commands.Cog):
         text += "\n"
         text += "`" + ctx.prefix + LFG_COMMAND
         text += " <mode> <description>`\n"
-        text += "\n"
         text += "ou\n"
-        text += "\n"
         text += "`" + ctx.prefix + LFG_COMMAND
         text += " <description>`  (annonce personnalisée, pas de @mention automatique)\n"
         text += "\n"
