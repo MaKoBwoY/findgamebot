@@ -63,8 +63,8 @@ class matchmaking(commands.Cog):
         print("Fils rafraîchis:\n", self.threads)
 
     async def lfg_help(self, ctx):
-        text += "\n"
-        text = "Pour annoncer une nouvelle partie, tape :\n"
+        text = "\n"
+        text += "Pour annoncer une nouvelle partie, tape :\n"
         text += "\n"
         text += "`" + ctx.prefix + LFG_COMMAND
         text += " <mode> <description>`\n"
