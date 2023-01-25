@@ -65,7 +65,7 @@ class matchmaking(commands.Cog):
     async def lfg_help(self, ctx):
         text = "Pour annoncer une nouvelle partie :\n"
         text += "`" + ctx.prefix + LFG_COMMAND
-        text += " <mode> <description>` : remplace `<mode>` par un des modes de jeu listés\n"
+        text += " <mode> <description>` : remplace `<mode>` par un des 4 modes de jeu\n"
         text += "et `<description>` par tes options de jeu (ou ce que tu veux)\n"
         text += "ou\n"
         text += "`" + ctx.prefix + LFG_COMMAND
@@ -88,7 +88,7 @@ class matchmaking(commands.Cog):
             commands_list.append(command_text)
 
         embed = discord.Embed(description="".join(commands_list))
-        text += "\nmodes de jeu :\n"
+        text += "\nles 4 modes de jeu :\n"
 
         await ctx.send(text,embed=embed)
 
