@@ -67,6 +67,7 @@ class matchmaking(commands.Cog):
         text += "\n"
         text += "`" + ctx.prefix + LFG_COMMAND
         text += " <mode> <description>`\n"
+        text += "\n"
         text += "remplace `<mode>` par un des 4 modes de jeu\n"
         text += "et `<description>` par tes options de jeu (ou ce que tu veux)\n"
         text += "\n"
