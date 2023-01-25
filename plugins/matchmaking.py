@@ -91,7 +91,6 @@ class matchmaking(commands.Cog):
             commands_list.append(command_text)
 
         embed = discord.Embed(description="".join(commands_list))
-        text += "\nles 4 modes de jeu :\n"
 
         await ctx.send(text,embed=embed)
 
