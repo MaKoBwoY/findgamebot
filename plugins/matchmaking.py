@@ -155,6 +155,7 @@ class matchmaking(commands.Cog):
 
         embed.title = "Qui pour "
         embed.title += common.indefinite_article(gameWanted)
+        embed.title += " " + gameWanted + "?"
 
         if (not(len(gameIcon))):
             gameIcon = common.DEFAULT_AVATAR_URL
