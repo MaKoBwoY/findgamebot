@@ -55,12 +55,12 @@ class matchmaking(commands.Cog):
         for thread in self.threads:
             try:
                 if (not(thread.archived)):
-                    await thread.send(content="Rafraîchissement journalier! ;)\nSi cette partie est finie, fais-le moi savoir!")
+                    await thread.send(content="Daily refresh! Enjoy!\nIf this game is over, please let me know!")
                     valid_threads.append(thread)
             except Exception as error:
                 print(error)
         self.threads = valid_threads
-        print("Fils rafraîchis:\n", self.threads)
+        print("Refreshed threads:\n", self.threads)
 
     async def lfg_help(self, ctx):
         text = "Pour annoncer une nouvelle partie, tape :\n"
@@ -153,7 +153,7 @@ class matchmaking(commands.Cog):
 
         embed.title = "Qui pour "
         embed.title += common.indefinite_article(gameWanted)
-        embed.title += " " + gameWanted + " ?"
+        embed.title += "un" + gameWanted + " ?"
 
         if (not(len(gameIcon))):
             gameIcon = common.DEFAULT_AVATAR_URL
