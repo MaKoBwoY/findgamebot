@@ -63,13 +63,13 @@ class matchmaking(commands.Cog):
         print("Fils rafraîchis:\n", self.threads)
 
     async def lfg_help(self, ctx):
-        text = "Syntaxe:\n"
+        text = "Pour annoncer une nouvelle partie :\n"
         text += "`" + ctx.prefix + LFG_COMMAND
         text += " <mode> <description>` : remplace `<mode>` par un des modes de jeu listés\n"
         text += "et `<description>` par tes options de jeu (ou ce que tu veux)\n"
         text += "ou\n"
         text += "`" + ctx.prefix + LFG_COMMAND
-        text += " <description>` pour une annonce personnalisée (pas de @mention automatique).\n"
+        text += " <description>` pour une annonce personnalisée (pas de @mention automatique)\n"
 
         games, gamesNames = self.get_configured_games(ctx.guild.id, CONFIG_GAMES_COMMANDS, CONFIG_GAMES_NAMES)
 
