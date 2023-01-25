@@ -65,8 +65,8 @@ class matchmaking(commands.Cog):
     async def lfg_help(self, ctx):
         text = "Syntaxe:\n"
         text += "`" + ctx.prefix + LFG_COMMAND
-        text += " <jeu> <description>` remplace `<jeu>` par un des modes de jeu ci-dessous.\n"
-        text += "o\n"
+        text += " <jeu> <description>` : remplace `<jeu>` par un des modes de jeu ci-dessous et indique tes paramètres de partie.\n"
+        text += "ou\n"
         text += "`" + ctx.prefix + LFG_COMMAND
         text += " <description>` pour une partie custom (pas de ping automatique).\n"
 
@@ -80,14 +80,14 @@ class matchmaking(commands.Cog):
             command_text += game
             command_text += " " * (align-len(game)) + "`"
             if (len(gamesNames) == len(games) and len(gamesNames[index])):
-                command_text += " : Recherche "
+                command_text += " : Pour jouer "
                 command_text += common.indefinite_article(gamesNames[index]) + " "
-                command_text += "**" + gamesNames[index] + "** jeu."
+                command_text += "**" + gamesNames[index] + "**."
             command_text += "\n"
             commands_list.append(command_text)
 
         embed = discord.Embed(description="".join(commands_list))
-        text += "\nJeux disponibles sur ton serveur:\n"
+        text += "\nModes de jeu :\n"
 
         await ctx.send(text,embed=embed)
 
