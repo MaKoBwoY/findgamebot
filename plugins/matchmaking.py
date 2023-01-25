@@ -55,7 +55,7 @@ class matchmaking(commands.Cog):
         for thread in self.threads:
             try:
                 if (not(thread.archived)):
-                    await thread.send(content="Rafraîchissement journalier! Enjoy!\nSi cette partie est finie, fais-le moi savoir!")
+                    await thread.send(content="Rafraîchissement journalier! ;)\nSi cette partie est finie, fais-le moi savoir!")
                     valid_threads.append(thread)
             except Exception as error:
                 print(error)
@@ -65,7 +65,7 @@ class matchmaking(commands.Cog):
     async def lfg_help(self, ctx):
         text = "Syntaxe:\n"
         text += "`" + ctx.prefix + LFG_COMMAND
-        text += " <jeu> <description>` où `<jeu>` est un des modes de jeu avec un rôle correspondant à mentionner.\n"
+        text += " <jeu> <description>` remplace `<jeu>` par un des modes de jeu ci-dessous.\n"
         text += "or\n"
         text += "`" + ctx.prefix + LFG_COMMAND
         text += " <description>` pour une partie custom (pas de ping automatique).\n"
@@ -80,7 +80,7 @@ class matchmaking(commands.Cog):
             command_text += game
             command_text += " " * (align-len(game)) + "`"
             if (len(gamesNames) == len(games) and len(gamesNames[index])):
-                command_text += " : Looking for "
+                command_text += " : Recherche "
                 command_text += common.indefinite_article(gamesNames[index]) + " "
                 command_text += "**" + gamesNames[index] + "** jeu."
             command_text += "\n"
@@ -128,7 +128,7 @@ class matchmaking(commands.Cog):
         embed.set_footer(text="Pour discuter dans cette partie, crée un fil.")
 
         if (len(gameRole)):
-            embed.add_field(name="Cible", value=gameRole, inline=True)
+            embed.add_field(name="Joueurs", value=gameRole, inline=True)
 
         # Member and User return different mentions for server nicknames...
         #☺ So this :
@@ -147,7 +147,7 @@ class matchmaking(commands.Cog):
         embed.set_author(name=ctx.message.author.display_name,
                          icon_url=author_avatar)
 
-        embed.title = "Qui pour une partie de "
+        embed.title = "Qui pour"
         embed.title += common.indefinite_article(gameWanted)
 
         if (not(len(gameIcon))):
@@ -195,7 +195,7 @@ class matchmaking(commands.Cog):
         title = ""
         if (len(message.embeds)):
             title = str(message.embeds[0].title)
-        if (not(title.startswith("Qui pour une partie de"))):
+        if (not(title.startswith("Qui pour"))):
             return False
 
         embed = message.embeds[0]
@@ -205,7 +205,7 @@ class matchmaking(commands.Cog):
         for field in fields:
             if (field.name == "Hôte"):
                 host = field.value
-            if (field.name == "Cible"):
+            if (field.name == "Joueurs"):
                 target = field.value
         if (not(len(message.reactions)) # Game already closed, reactions cleaned
             or not(len(host))): # Should not happen...
@@ -227,7 +227,7 @@ class matchmaking(commands.Cog):
 
             embed.clear_fields()
             if (len(target)):
-                embed.add_field(name="Cible", value=target, inline=True)
+                embed.add_field(name="Joueurs", value=target, inline=True)
             embed.add_field(name="Hôte", value=host, inline=True)
             guests = ""
             for player in players:
@@ -250,9 +250,9 @@ class matchmaking(commands.Cog):
                     try:
                         message_to_send = "Un joueur (" + str(user) + ")"
                         message_to_send += " a rejoint la partie!\n"
-                        message_to_send += "Head to the LFG channel ("
+                        message_to_send += "Rends-toi dans la section ("
                         message_to_send += channel.mention
-                        message_to_send += ") of "
+                        message_to_send += ") de "
                         message_to_send += "**" + str(channel.guild) + "**"
                         message_to_send += " pour commencer la discussion."
                         await user_to_notify.send(message_to_send)
@@ -264,7 +264,7 @@ class matchmaking(commands.Cog):
             emoji_url = payload.emoji.url
             if (not(len(emoji_url))):
                 emoji_url = common.get_default_emoji_url(payload.emoji.name)
-            embed.set_footer(text="Table complète, désolé!", icon_url=emoji_url)
+            embed.set_footer(text="Table complète, désolé !", icon_url=emoji_url)
             try:
                 await message.edit(embed=embed)
                 await message.clear_reactions()
