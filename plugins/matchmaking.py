@@ -69,9 +69,9 @@ class matchmaking(commands.Cog):
         text += " <mode> <description>`\n"
         text += "ou\n"
         text += "`" + ctx.prefix + LFG_COMMAND
-        text += " <description>`  (annonce personnalisée, pas de @mention automatique)\n"
+        text += " <description>`  (annonce personnalisée, pas de @mention)\n"
         text += "\n"
-        text += "remplace  `<mode>`  par un des 4 modes de jeu ci-dessous\n"
+        text += "remplace  `<mode>`  par l'un des 4 modes de jeu ci-dessous\n"
         text += "et  `<description>`  par tes options de jeu (ou ce que tu veux)\n"
 
         games, gamesNames = self.get_configured_games(ctx.guild.id, CONFIG_GAMES_COMMANDS, CONFIG_GAMES_NAMES)
@@ -86,7 +86,7 @@ class matchmaking(commands.Cog):
             if (len(gamesNames) == len(games) and len(gamesNames[index])):
                 command_text += " : pour "
                 command_text += common.indefinite_article(gamesNames[index]) + " "
-                command_text += "**" + gamesNames[index] + "**."
+                command_text += "**" + gamesNames[index] + "**"
             command_text += "\n"
             commands_list.append(command_text)
 
