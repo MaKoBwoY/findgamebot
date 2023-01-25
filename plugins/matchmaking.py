@@ -65,8 +65,8 @@ class matchmaking(commands.Cog):
     async def lfg_help(self, ctx):
         text = "Syntaxe:\n"
         text += "`" + ctx.prefix + LFG_COMMAND
-        text += " <mode> <description>` : remplace `<jeu>` par un des modes de jeu listés\n"
-        text += " <mode> <description>` : remplace `<jeu>` par un des modes de jeu listés\n"
+        text += " <mode> <description>` : remplace `<mode>` par un des modes de jeu listés\n"
+        text += "                         et remplace `<description>` par tes options (ou ce que tu veux)\n"
         text += "ou\n"
         text += "`" + ctx.prefix + LFG_COMMAND
         text += " <description>` pour une partie custom (pas de ping automatique).\n"
