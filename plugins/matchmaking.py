@@ -65,7 +65,8 @@ class matchmaking(commands.Cog):
     async def lfg_help(self, ctx):
         text = "Syntaxe:\n"
         text += "`" + ctx.prefix + LFG_COMMAND
-        text += " <jeu> <description>` : remplace `<jeu>` par un des modes de jeu ci-dessous et indique tes paramètres de partie.\n"
+        text += " <mode> <description>` : remplace `<jeu>` par un des modes de jeu listés\n"
+        text += " <mode> <description>` : remplace `<jeu>` par un des modes de jeu listés\n"
         text += "ou\n"
         text += "`" + ctx.prefix + LFG_COMMAND
         text += " <description>` pour une partie custom (pas de ping automatique).\n"
@@ -87,7 +88,7 @@ class matchmaking(commands.Cog):
             commands_list.append(command_text)
 
         embed = discord.Embed(description="".join(commands_list))
-        text += "\nModes de jeu :\n"
+        text += "\nmodes de jeu :\n"
 
         await ctx.send(text,embed=embed)
 
@@ -249,10 +250,10 @@ class matchmaking(commands.Cog):
                         continue
                     try:
                         message_to_send = "Un joueur (" + str(user) + ")"
-                        message_to_send += " a rejoint la partie!\n"
-                        message_to_send += "Rends-toi dans la section ("
+                        message_to_send += " a rejoint la partie !\n"
+                        message_to_send += "Rends-toi dans la section "
                         message_to_send += channel.mention
-                        message_to_send += ") de "
+                        message_to_send += " de "
                         message_to_send += "**" + str(channel.guild) + "**"
                         message_to_send += " pour commencer la discussion."
                         await user_to_notify.send(message_to_send)
