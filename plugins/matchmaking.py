@@ -64,6 +64,7 @@ class matchmaking(commands.Cog):
 
     async def lfg_help(self, ctx):
         text = "Pour annoncer une nouvelle partie :\n"
+        text += "\n"
         text += "`" + ctx.prefix + LFG_COMMAND
         text += " <mode> <description>` : remplace `<mode>` par un des 4 modes de jeu\n"
         text += "et `<description>` par tes options de jeu (ou ce que tu veux)\n"
