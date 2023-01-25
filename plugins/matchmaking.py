@@ -66,7 +66,7 @@ class matchmaking(commands.Cog):
         text = "Syntaxe:\n"
         text += "`" + ctx.prefix + LFG_COMMAND
         text += " <jeu> <description>` remplace `<jeu>` par un des modes de jeu ci-dessous.\n"
-        text += "or\n"
+        text += "o\n"
         text += "`" + ctx.prefix + LFG_COMMAND
         text += " <description>` pour une partie custom (pas de ping automatique).\n"
 
