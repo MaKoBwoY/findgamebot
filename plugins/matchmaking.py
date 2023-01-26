@@ -270,14 +270,25 @@ class matchmaking(commands.Cog):
             try:
                 await message.edit(embed=embed)
                 await message.clear_reactions()
+           
+               if (str(payload.emoji.name) == EMOJI_CLOSE and user.mention == host):
+            emoji_url = payload.emoji.url
+            if (not(len(emoji_url))):
+                emoji_url = common.get_default_emoji_url(payload.emoji.name)
+            embed.set_footer(text="Table complète, désolé !", icon_url=emoji_url)
+            try:
+                await message.edit(embed=embed)
+                await message.clear_reactions()
             except Exception as error:
                 print(error)
+            
             try:
-                 thread = await message.create_thread(name="Fil de partie")
-                 self.threads.append(thread)
-             except Exception as e:
-                 print(e)
-                 print(self.threads)
+                thread = await message.create_thread(name="Game thread")
+                self.threads.append(thread)
+            except Exception as e:
+                print(e)
+                print(self.threads)
+                 
 
 def setup(bot):
     config = configparser.ConfigParser()
