@@ -272,13 +272,12 @@ class matchmaking(commands.Cog):
                 await message.clear_reactions()
             except Exception as error:
                 print(error)
-            ## New feature to converge
-            # try:
-            #     thread = await message.create_thread(name="Game thread")
-            #     self.threads.append(thread)
-            # except Exception as e:
-            #     print(e)
-            # print(self.threads)
+            try:
+                 thread = await message.create_thread(name="Fil de partie")
+                 self.threads.append(thread)
+             except Exception as e:
+                 print(e)
+                 print(self.threads)
 
 def setup(bot):
     config = configparser.ConfigParser()
