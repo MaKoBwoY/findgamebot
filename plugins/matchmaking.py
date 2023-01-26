@@ -292,4 +292,5 @@ class matchmaking(commands.Cog):
 def setup(bot):
     config = configparser.ConfigParser()
     config.read('config/games.ini')
+
     bot.add_cog(matchmaking(bot, config))
