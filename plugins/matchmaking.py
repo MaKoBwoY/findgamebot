@@ -270,6 +270,7 @@ class matchmaking(commands.Cog):
             try:
                 await message.edit(embed=embed)
                 await message.clear_reactions()
+                await message.create_thread(name="nouvelle partie", message="@spectateur", auto_archive_duration=60, type=private_thread, reason=None
             except Exception as error:
                 print(error)
             ## New feature to converge
