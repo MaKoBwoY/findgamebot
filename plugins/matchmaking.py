@@ -270,16 +270,15 @@ class matchmaking(commands.Cog):
             try:
                 await message.edit(embed=embed)
                 await message.clear_reactions()
-                await message.create_thread(name="nouvelle partie", message="@spectateur", auto_archive_duration=60, type=private_thread, reason=None
             except Exception as error:
                 print(error)
-            ## New feature to converge
-            # try:
-            #     thread = await message.create_thread(name="Game thread")
-            #     self.threads.append(thread)
-            # except Exception as e:
-            #     print(e)
-            # print(self.threads)
+            
+            try:
+                await message.create_thread(name="nouvelle partie", message="@spectateur", auto_archive_duration=60, type=private_thread, reason=None
+                self.threads.append(thread)
+            except Exception as e:
+                print(e)
+                print(self.threads)
 
 def setup(bot):
     config = configparser.ConfigParser()
