@@ -273,12 +273,12 @@ class matchmaking(commands.Cog):
             except Exception as error:
                 print(error)
             
-            try:
-                await message.create_thread(name="nouvelle partie", message="@spectateur", auto_archive_duration=60, type=private_thread, reason=None
-                self.threads.append(thread)
-            except Exception as e:
-                print(e)
-                print(self.threads)
+            #try:
+                #await message.create_thread(name="nouvelle partie", message="@spectateur", auto_archive_duration=60, type=private_thread, reason=None
+                #self.threads.append(thread)
+            #except Exception as e:
+                #print(e)
+                #print(self.threads)
 
 def setup(bot):
     config = configparser.ConfigParser()
