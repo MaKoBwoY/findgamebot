@@ -72,7 +72,7 @@ class matchmaking(commands.Cog):
         text += " <description>`  (personnalisé - sans @mention)\n"
         text += "\n"
         text += "remplace  `<mode>`  par l'un des 4 modes de jeu ci-dessous\n"
-        text += "et  `<description>`  par tes options de jeu ou toute autre info)\n"
+        text += "et  `<description>`  par tes options de jeu ou toute autre info\n"
 
         games, gamesNames = self.get_configured_games(ctx.guild.id, CONFIG_GAMES_COMMANDS, CONFIG_GAMES_NAMES)
 
@@ -127,7 +127,7 @@ class matchmaking(commands.Cog):
         if (len(desc)):
             text += " ".join(desc)
         embed = discord.Embed(description=text)
-        embed.set_footer(text="Pour discuter dans cette partie, crée un fil.")
+        embed.set_footer(text="Créé un fil et @mentionne les participants.")
 
         if (len(gameRole)):
             embed.add_field(name="Joueurs", value=gameRole, inline=True)
