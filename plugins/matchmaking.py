@@ -72,7 +72,7 @@ class matchmaking(commands.Cog):
         text += " <description>`  (personnalisé - sans @mention)\n"
         text += "\n"
         text += "remplace  `<mode>`  par l'un des 4 modes de jeu ci-dessous\n"
-        text += "et  `<description>`  par tes options de jeu (ou ce que tu veux)\n"
+        text += "et  `<description>`  par tes options de jeu ou toute autre info)\n"
 
         games, gamesNames = self.get_configured_games(ctx.guild.id, CONFIG_GAMES_COMMANDS, CONFIG_GAMES_NAMES)
 
