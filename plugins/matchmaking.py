@@ -4,7 +4,7 @@ import configparser
 
 from utils import common
 
-LFG_COMMAND = "lfg"
+LFG_COMMAND = "match"
 
 CONFIG_GAMES_COMMANDS = "GamesCommands"
 CONFIG_GAMES_NAMES = "GamesFullNames"
