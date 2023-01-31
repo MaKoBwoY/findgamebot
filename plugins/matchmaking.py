@@ -127,7 +127,7 @@ class matchmaking(commands.Cog):
         if (len(desc)):
             text += " ".join(desc)
         embed = discord.Embed(description=text)
-        embed.set_footer(text="ELO MATCH: /join root elo_XX")
+        embed.set_footer(text="MATCH ELO: tapez /join et choisissez la file demandée")
 
         if (len(gameRole)):
             embed.add_field(name="Joueurs", value=gameRole, inline=True)
