@@ -63,7 +63,7 @@ class matchmaking(commands.Cog):
         print("Refreshed threads:\n", self.threads)
 
     async def lfg_help(self, ctx):
-        text = "Pour annoncer une nouvelle partie, tape :\n"
+        text = "Pour annoncer une nouvelle partie :\n"
         text += "\n"
         text += "`" + ctx.prefix + LFG_COMMAND
         text += " <mode> <description>`\n"
@@ -127,7 +127,7 @@ class matchmaking(commands.Cog):
         if (len(desc)):
             text += " ".join(desc)
         embed = discord.Embed(description=text)
-        embed.set_footer(text="Créé un fil et @mentionne les participants.")
+        embed.set_footer(text="__ELO MATCH:__ ***/join*** & select queue , confirm with :ballot_box_with_check:")
 
         if (len(gameRole)):
             embed.add_field(name="Joueurs", value=gameRole, inline=True)
