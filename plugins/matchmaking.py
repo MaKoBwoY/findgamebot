@@ -127,7 +127,7 @@ class matchmaking(commands.Cog):
         if (len(desc)):
             text += " ".join(desc)
         embed = discord.Embed(description=text)
-        embed.set_footer(text="__ELO MATCH:__ ***/join*** & select queue , confirm with :ballot_box_with_check:")
+        embed.set_footer(text="ELO MATCH: /join root elo_XX")
 
         if (len(gameRole)):
             embed.add_field(name="Joueurs", value=gameRole, inline=True)
