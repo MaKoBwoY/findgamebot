@@ -107,7 +107,7 @@ class matchmaking(commands.Cog):
                                   CONFIG_GAMES_NAMES, CONFIG_GAMES_ROLES, \
                                   CONFIG_GAMES_ICONS, CONFIG_GAMES_COLORS)
 
-        gameWanted = "custom"
+        gameWanted = "match"
         gameRole = ""
         gameIcon = ""
         gameColor = ""
