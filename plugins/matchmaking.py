@@ -274,7 +274,7 @@ class matchmaking(commands.Cog):
                 print(error)
             
             #try:
-                #await message.create_thread(name="nouvelle partie", message="@spectateur", auto_archive_duration=60, type=private_thread, reason=None
+                #await channel.create_thread(name="new game", message="@spectateur", auto_archive_duration=MAX, type=discord.ChannelType.private_thread, reason=None
                 #self.threads.append(thread)
             #except Exception as e:
                 #print(e)
