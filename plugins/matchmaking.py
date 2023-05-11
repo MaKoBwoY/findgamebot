@@ -282,8 +282,8 @@ class matchmaking(commands.Cog):
                     if (user_to_notify == user):
                         continue
                     message_to_send = "Un joueur (" + str(user) + ")"
-                    message_to_send += " a rejoint ta partie"
-                    message_to_send += " dans la section "
+                    message_to_send += " a rejoint la partie"
+                    message_to_send += " dans "
                     message_to_send += channel.mention + ".\n"
                     if (user_to_notify.mention == host):
                         message_to_send += "Quand la table est complète,"
@@ -332,7 +332,7 @@ class matchmaking(commands.Cog):
                 if (len(guests)):
                     thread_pings += ", " + guests
                 thread_message = thread_pings + ", "
-                thread_message += "your game can start! GLHF!"
+                thread_message += "la partie peut démarrer ! GLHF!"
 
                 # Thread title = embed description without custom emojis
                 thread_title = embed.description
