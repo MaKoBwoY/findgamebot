@@ -142,7 +142,7 @@ class matchmaking(commands.Cog):
         if (len(desc)):
             text += " ".join(desc)
         embed = discord.Embed(description=text)
-        embed.set_footer(text="Pour les discussions de partie utilisez le fil.\nqui sera créé quand vous fermerez la partie avec ✅.")
+        embed.set_footer(text="Un fil de discussion sera créé automatiquement\nquand vous fermerez la partie avec ✅.")
 
         if (len(gameRole)):
             embed.add_field(name="Joueurs", value=gameRole, inline=True)
