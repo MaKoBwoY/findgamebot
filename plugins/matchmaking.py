@@ -103,7 +103,6 @@ class matchmaking(commands.Cog):
             commands_list.append(command_text)
 
         embed = discord.Embed(description="".join(commands_list))
-        text += "\nGames available on your server:\n"
 
         await ctx.send(text,embed=embed)
 
@@ -143,7 +142,7 @@ class matchmaking(commands.Cog):
         if (len(desc)):
             text += " ".join(desc)
         embed = discord.Embed(description=text)
-        embed.set_footer(text="Pour les discussions de partie utilisez le fil.\nIl sera créé quand vous fermez la partie.")
+        embed.set_footer(text="Pour les discussions de partie utilisez le fil.\nqui sera créé quand vous fermerez la partie avec ✅.")
 
         if (len(gameRole)):
             embed.add_field(name="Joueurs", value=gameRole, inline=True)
@@ -290,7 +289,7 @@ class matchmaking(commands.Cog):
                         message_to_send += "Quand la table est complète,"
                         message_to_send += " ouvre un fil de discussion avec "
                         message_to_send += EMOJI_START + ", tous les joueurs"
-                        message_to_send += "seront @mentionnés. GLHF!"
+                        message_to_send += " seront @mentionnés. GLHF!"
                     else:
                         message_to_send += "Tu seras @mentionné "
                         message_to_send += " quand la partie pourra démarrer. GLHF!"
