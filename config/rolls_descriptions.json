@@ -1,8 +1,7 @@
 [
    {
       "title":"Autumn",
-      "image": {"url": "https://imgur.com/a/PctX4Yq"},
-      "thumbnail": {"url": "https://imgur.com/a/PctX4Yq"},
+      "thumbnail": {"url": "https://i.imgur.com/nAedkzf.png"},
       "color": 14520159,
       "category":"Map"
    },
@@ -30,8 +29,7 @@
    },
    {
       "title":"Tidal Flats",
-      "description":"You are on the mountain! Surely one cannot rule the land until they are king of the mountain. Reach the summit, show your prowess, let the plebs gasp at your mighty tree fort.",
-      "image": {"url": "https://i.imgur.com/53dlDot.jpg"},
+      "thumbnail": {"url": "https://i.imgur.com/C1TbkYW.png"},
       "color": 11109457,
       "category":"Map"
    },
