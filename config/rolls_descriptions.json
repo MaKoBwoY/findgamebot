@@ -7,23 +7,19 @@
    },
    {
       "title":"Winter",
-      "description":"You are in winter! You love cold feet, sticking your tongue on your steel blade just for the fun of it and look great sporting the silver fox look as your beard freezes.",
-      "image": {"url": "https://i.imgur.com/cwXDPnO.jpg"},
-      "thumbnail": {"url": "https://i.imgur.com/13inxbU.jpg"},
+      "thumbnail": {"url": "https://i.imgur.com/X3LibTS.png"},
       "color": 16514303,
       "category":"Map"
    },
    {
       "title":"Lake",
-      "description":"You are at the lake! Ah! Fresh air! A little boating and some fishing. Just the thing to keep your mind off those whispering bubbles—your adversaries last gasps of air as they sink to the bottom with your prize rock collection.",
-      "image": {"url": "https://i.imgur.com/dp2MolG.jpg"},
+      "thumbnail": {"url": "https://i.imgur.com/4mEmn8X.png"},
       "color": 1752220,
       "category":"Map"
    },
    {
       "title":"Mountain",
-      "description":"You are on the mountain! Surely one cannot rule the land until they are king of the mountain. Reach the summit, show your prowess, let the plebs gasp at your mighty tree fort.",
-      "image": {"url": "https://i.imgur.com/53dlDot.jpg"},
+      "thumbnail": {"url": "https://i.imgur.com/ISLS1bS.png"},
       "color": 12745742,
       "category":"Map"
    },
