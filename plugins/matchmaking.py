@@ -140,7 +140,7 @@ class matchmaking(commands.Cog):
         if (len(desc)):
             text += " ".join(desc)
         embed = discord.Embed(description=text)
-        embed.set_footer(text="👍pour rejoindre 🔔pour être notifié quand un joueur rejoint\n❌pour annuler ✅pour lancer la partie")
+        embed.set_footer(text="👍rejoindre 🔔être notifié quand un joueur rejoint\n❌annuler ✅lancer la partie")
 
         if (len(gameRole)):
             embed.add_field(name="Joueurs", value=gameRole, inline=True)
@@ -301,7 +301,7 @@ class matchmaking(commands.Cog):
             emoji_url = payload.emoji.url
             if (not(len(emoji_url))):
                 emoji_url = common.get_default_emoji_url(emoji_name)
-            embed.set_footer(text="Table complète, désolé !", icon_url=emoji_url)
+            embed.set_footer(text="Table complète !", icon_url=emoji_url)
             try:
                 await message.edit(embed=embed)
                 await message.clear_reactions()
