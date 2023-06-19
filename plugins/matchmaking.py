@@ -110,8 +110,6 @@ class matchmaking(commands.Cog):
     async def lfg(self, ctx, *desc):
         if (not(len(desc)) or desc[0] == common.HELP_COMMAND):
             return await self.lfg_help(ctx)
-        elif (ctx.channel.type in THREAD_TYPES):
-            return await self.rename_thread(ctx, *desc)
         else:
             return await self.lfg_v2(ctx, *desc)
 
