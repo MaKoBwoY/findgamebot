@@ -82,7 +82,7 @@ class matchmaking(commands.Cog):
         text += " <mode> <description>`\n"
         text += "ou\n"
         text += "`" + ctx.prefix + LFG_COMMAND
-        text += " @mention @mention @mention` (pour inviter directement des joueurs)\n"
+        text += " @mention @mention @mention` (pour inviter des joueurs)\n"
         text += "\n"
         text += "remplace  `<mode>`  par l'un des 4 modes de jeu ci-dessous\n"
         text += "et  `<description>`  par tes options de jeu ou toute autre info\n"
@@ -140,7 +140,7 @@ class matchmaking(commands.Cog):
         if (len(desc)):
             text += " ".join(desc)
         embed = discord.Embed(description=text)
-        embed.set_footer(text="Un fil de discussion sera créé automatiquement\navec ✅.")
+        embed.set_footer(text="👍pour rejoindre 🔔pour être notifié quand un joueur rejoint\n❌pour annuler ✅pour lancer la partie")
 
         if (len(gameRole)):
             embed.add_field(name="Joueurs", value=gameRole, inline=True)
