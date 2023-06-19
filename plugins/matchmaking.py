@@ -82,7 +82,7 @@ class matchmaking(commands.Cog):
         text += " <mode> <description>`\n"
         text += "ou\n"
         text += "`" + ctx.prefix + LFG_COMMAND
-        text += " <description>`  (personnalisé - sans @mention)\n"
+        text += " @mention @mention @mention` (pour inviter directement des joueurs)\n"
         text += "\n"
         text += "remplace  `<mode>`  par l'un des 4 modes de jeu ci-dessous\n"
         text += "et  `<description>`  par tes options de jeu ou toute autre info\n"
@@ -140,7 +140,7 @@ class matchmaking(commands.Cog):
         if (len(desc)):
             text += " ".join(desc)
         embed = discord.Embed(description=text)
-        embed.set_footer(text="Un fil de discussion sera créé automatiquement\nquand vous fermerez la partie avec ✅.")
+        embed.set_footer(text="Un fil de discussion sera créé automatiquement\navec ✅.")
 
         if (len(gameRole)):
             embed.add_field(name="Joueurs", value=gameRole, inline=True)
@@ -286,11 +286,11 @@ class matchmaking(commands.Cog):
                     if (user_to_notify.mention == host):
                         message_to_send += "Quand la table est complète,"
                         message_to_send += " ouvre un fil de discussion avec "
-                        message_to_send += EMOJI_START + ", tous les joueurs"
-                        message_to_send += " seront @mentionnés. GLHF!"
+                        message_to_send += EMOJI_START + ", tous les joueurs "
+                        message_to_send += "y seront @mentionnés. GLHF!"
                     else:
                         message_to_send += "Tu seras @mentionné "
-                        message_to_send += " quand la partie pourra démarrer. GLHF!"
+                        message_to_send += "quand la partie pourra démarrer. GLHF!"
                     try:
                         await user_to_notify.send(message_to_send)
                     except Exception as e:
