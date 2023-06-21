@@ -114,11 +114,6 @@ class matchmaking(commands.Cog):
         else:
             return await self.lfg_v2(ctx, *desc)
 
- @commands.command(name=RENAME_THREAD_COMMAND)
-    async def lfg(self, ctx, *desc):
-        if (ctx.channel.type in THREAD_TYPES):
-            return await self.rename_thread(ctx, *desc)
-
     @commands.command()
     async def lfg_v2(self, ctx, *desc):
         games, gamesNames, gamesRoles, gamesIcons, gamesColors = \
