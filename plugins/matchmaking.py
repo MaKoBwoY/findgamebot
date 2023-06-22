@@ -26,6 +26,7 @@ EMOJIS_CLOSE = [EMOJI_CANCEL, EMOJI_START]
 DEFAULT_AVATAR_URL = "https://i.imgur.com/xClQZ1Q.png"
 
 THREAD_TYPES = [discord.ChannelType.public_thread,
+                discord.ChannelType.private_thread,
                 discord.ChannelType.news_thread]
 
 class matchmaking(commands.Cog):
@@ -372,7 +373,7 @@ class matchmaking(commands.Cog):
 
                 if (not(thread_in_forum)):
                     keywords['message'] = parent_message
-                    keywords['type'] = discord.ChannelType.public_thread
+                    keywords['type'] = discord.ChannelType.private_thread
 
                 try:
                     thread = await thread_channel.create_thread(**keywords)
