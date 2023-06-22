@@ -372,7 +372,6 @@ class matchmaking(commands.Cog):
                         keywords['embed'] = thread_embed
 
                 if (not(thread_in_forum)):
-                    keywords['message'] = parent_message
                     keywords['type'] = discord.ChannelType.private_thread
 
                 try:
