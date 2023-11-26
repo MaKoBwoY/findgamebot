@@ -27,7 +27,8 @@ DEFAULT_AVATAR_URL = "https://i.imgur.com/xClQZ1Q.png"
 
 THREAD_TYPES = [discord.ChannelType.public_thread,
                 discord.ChannelType.private_thread,
-                discord.ChannelType.news_thread]
+                discord.ChannelType.news_thread,
+                discord.ChannelType.news]
 
 class matchmaking(commands.Cog):
 
