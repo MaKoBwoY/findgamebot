@@ -374,7 +374,7 @@ class matchmaking(commands.Cog):
                 if (not(thread_in_forum)):
                     keywords['type'] = discord.ChannelType.private_thread
 
-                if (discord.ChannelType.news):
+                 if (channel.type == discord.ChannelType.news):
                     keywords['type'] = discord.ChannelType.public_thread
 
                 try:
