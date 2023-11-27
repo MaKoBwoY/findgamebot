@@ -371,10 +371,11 @@ class matchmaking(commands.Cog):
                         keywords['content'] = thread_message
                         keywords['embed'] = thread_embed
 
-                if (not(thread_in_forum)):
+                if (channel.type == discord.ChannelType.text):
                     keywords['type'] = discord.ChannelType.private_thread
 
                  if (channel.type == discord.ChannelType.news):
+                    keywords['message'] = parent_message
                     keywords['type'] = discord.ChannelType.news_thread
 
                 try:
