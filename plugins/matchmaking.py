@@ -15,6 +15,7 @@ CONFIG_GAMES_ICONS = "GamesIcons"
 CONFIG_GAMES_COLORS = "GamesColors"
 CONFIG_GAMES_FORUMS = "GamesForums"
 CONFIG_GAMES_TAGS = "GamesTags"
+CONFIG_GAMES_VISIBILITY = "GamesVisibility"
 
 EMOJI_JOIN = "👍"
 EMOJI_NOTIFY = "🔔"
@@ -90,18 +91,18 @@ class matchmaking(commands.Cog):
 
         games, gamesNames = self.get_configured_games(ctx.guild.id, CONFIG_GAMES_COMMANDS, CONFIG_GAMES_NAMES)
 
-        commands_list = []
-        align = len(max(games, key=len))
-        for game in games:
-            index = games.index(game)
-            command_text = "• `"
-            command_text += game
-            command_text += " " * (align-len(game)) + "`"
-            if (len(gamesNames) == len(games) and len(gamesNames[index])):
-                command_text += "  : pour "
-                command_text += "**" + gamesNames[index] + "**"
-            command_text += "\n"
-            commands_list.append(command_text)
+            commands_list = []
+            align = len(max(games, key=len))
+            for game in games:
+                index = games.index(game)
+                command_text = "• `"
+                command_text += game
+                command_text += " " * (align-len(game)) + "`"
+                if (len(gamesNames) == len(games) and len(gamesNames[index])):
+                    command_text += "  : pour "
+                    command_text += "**" + gamesNames[index] + "**"
+                command_text += "\n"
+                commands_list.append(command_text)
 
         embed = discord.Embed(description="".join(commands_list))
 
@@ -311,19 +312,20 @@ class matchmaking(commands.Cog):
             except Exception as error:
                 print(error)
 
-   # New feature: create thread
+            # New feature: create thread
             # 3 cases: a) Do nothing if this message already has a thread
             #          b) Create thread in a (forum) channel if available
             #          c) Create thread under this message otherwise
             if (str(payload.emoji.name) == EMOJI_START and message.thread is None):
-                gamesRoles, gamesForums, gamesTags = \
+                gamesRoles, gamesForums, gamesTags, gamesVisibility = \
                 self.get_configured_games(payload.guild_id, \
                                           CONFIG_GAMES_ROLES, \
                                           CONFIG_GAMES_FORUMS, \
-                                          CONFIG_GAMES_TAGS)
-                nbGames = len(gamesForums)
+                                          CONFIG_GAMES_TAGS,
+                                          CONFIG_GAMES_VISIBILITY)
+                nbGames = len(gamesRoles)
                 index = -1
-                if (nbGames and nbGames == len(gamesRoles) and target in gamesRoles):
+                if (nbGames and target in gamesRoles):
                     index = gamesRoles.index(target)
 
                 thread_channel = channel
@@ -334,50 +336,57 @@ class matchmaking(commands.Cog):
                     thread_pings += ", " + guests
                 thread_message = thread_pings + ", "
                 thread_message += "la partie peut démarrer ! GLHF!"
+                thread_embed = None
 
                 # Thread title = embed description without custom emojis
-                thread_title = embed.description
-                thread_title = common.clean_thread_title(thread_title, self.custom_emoji_re)
-                # if (len(thread_title)):
-                #     thread_title = "".join(self.custom_emoji_re.split(thread_title))
-                # if (len(thread_title) > 100): # discord refuses thread if title too long
-                #     thread_title = thread_title[:100]
-                # if (not(len(thread_title))):
-                #     thread_title = "Game thread"
+                thread_title = common.clean_thread_title(embed.description, self.custom_emoji_re)
+                thread_visibility = True
+                thread_tag = None
 
                 keywords = {}
                 keywords['name'] = thread_title
 
-                if (index >= 0 and index < nbGames):
+                forum_id = ""
+                if (nbGames == len(gamesForums)):
                     forum_id = gamesForums[index]
-                    forum = None
-                    tag_name = ""
-                    if (nbGames == len(gamesTags)):
-                        tag_name = gamesTags[index]
-                    if (len(forum_id)):
-                        forum = self.bot.get_channel(int(forum_id))
-                    if (forum is not None):
-                        thread_in_forum = True
-                        thread_channel = forum
-                        thread_embed = embed.copy()
-                        thread_embed.remove_footer()
-                        thread_tag = None
-                        if (len(tag_name)):
-                            for forum_tag in forum.available_tags:
-                                if (forum_tag.name == tag_name):
-                                    thread_tag = forum_tag
-                        if (thread_tag is not None):
-                            keywords['applied_tags'] = [thread_tag]
-                        keywords['content'] = thread_message
-                        keywords['embed'] = thread_embed
+                forum = None
+                tag_name = ""
+                if (nbGames == len(gamesTags)):
+                    tag_name = gamesTags[index]
+                if (len(forum_id)):
+                    forum = self.bot.get_channel(int(forum_id))
+                if (forum is not None):
+                    thread_in_forum = True
+                    thread_channel = forum
+                    thread_embed = embed.copy()
+                    thread_embed.remove_footer()
+                    if (len(tag_name)):
+                        for forum_tag in forum.available_tags:
+                            if (forum_tag.name == tag_name):
+                                thread_tag = forum_tag
+                if (nbGames == len(gamesVisibility)):
+                    visibility = gamesVisibility[index]
+                    if (len(visibility) and int(visibility) == 0):
+                        thread_visibility = False
 
-                if (not(thread_in_forum)):
+                thread_has_parent = not(thread_in_forum) and thread_visibility
+                if (not(thread_has_parent)):
+                    thread_embed = embed.copy()
+                    thread_embed.remove_footer()
+                if (thread_in_forum):
+                    if (thread_tag is not None):
+                        keywords['applied_tags'] = [thread_tag]
+                    keywords['content'] = thread_message
+                    keywords['embed'] = thread_embed
+                if(thread_has_parent):
+                    keywords['message'] = parent_message
+                if (not(thread_visibility)):
                     keywords['type'] = discord.ChannelType.private_thread
 
                 try:
                     thread = await thread_channel.create_thread(**keywords)
                     if (not(thread_in_forum)):
-                        await thread.send(content=thread_message)
+                        await thread.send(content=thread_message, embed=thread_embed)
                 except Exception as e:
                     print(e)
 
