@@ -6,7 +6,6 @@ import re
 from utils import common
 
 LFG_COMMAND = "match"
-RENAME_THREAD_COMMAND = "rename"
 
 CONFIG_GAMES_COMMANDS = "GamesCommands"
 CONFIG_GAMES_NAMES = "GamesFullNames"
