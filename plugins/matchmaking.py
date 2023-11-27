@@ -375,7 +375,7 @@ class matchmaking(commands.Cog):
                     keywords['type'] = discord.ChannelType.private_thread
 
                  if (channel.type == discord.ChannelType.news):
-                    keywords['type'] = discord.ChannelType.public_thread
+                    keywords['type'] = discord.ChannelType.news_thread
 
                 try:
                     thread = await thread_channel.create_thread(**keywords)
