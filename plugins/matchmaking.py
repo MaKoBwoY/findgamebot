@@ -320,7 +320,7 @@ class matchmaking(commands.Cog):
                 self.get_configured_games(payload.guild_id, \
                                           CONFIG_GAMES_ROLES, \
                                           CONFIG_GAMES_FORUMS, \
-                                          CONFIG_GAMES_TAGS,
+                                          CONFIG_GAMES_TAGS, \
                                           CONFIG_GAMES_VISIBILITY)
                 nbGames = len(gamesRoles)
                 index = -1
