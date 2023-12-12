@@ -85,7 +85,7 @@ class matchmaking(commands.Cog):
         text += "`" + ctx.prefix + LFG_COMMAND
         text += " <description> @mention @mention @mention` (pour inviter des joueurs)\n"
         text += "\n"
-        text += "remplace  `<mode>`  par l'un des 4 modes de jeu ci-dessous\n"
+        text += "remplace  `<mode>`  par l'un des 2 modes de jeu ci-dessous\n"
         text += "et  `<description>`  par tes options de jeu ou toute autre info\n"
 
         games, gamesNames = self.get_configured_games(ctx.guild.id, CONFIG_GAMES_COMMANDS, CONFIG_GAMES_NAMES)
