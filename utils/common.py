@@ -11,7 +11,6 @@ CONFIG_DEFAULT = "DEFAULT"
 CONFIG_ID = "ID"
 
 HELP_COMMAND = "help"
-RENAME_THREAD_COMMAND = "rename"
 
 DEFAULT_AVATAR_URL = "https://i.imgur.com/xClQZ1Q.png"
 
@@ -76,6 +75,8 @@ def get_default_emoji_url(emoji):
 
 def clean_thread_title(title, re):
     # Thread title = title with stripped patterns (re) < 100 characters
+    if (title is None):
+        title = ""
     if (len(title)):
         title = "".join(re.split(title))
     if (len(title) > 100): # discord refuses thread if title too long
