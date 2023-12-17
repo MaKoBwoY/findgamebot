@@ -6,7 +6,6 @@ import re
 from utils import common
 
 LFG_COMMAND = "match"
-RENAME_THREAD_COMMAND = "rename"
 
 CONFIG_GAMES_COMMANDS = "GamesCommands"
 CONFIG_GAMES_NAMES = "GamesFullNames"
@@ -15,6 +14,7 @@ CONFIG_GAMES_ICONS = "GamesIcons"
 CONFIG_GAMES_COLORS = "GamesColors"
 CONFIG_GAMES_FORUMS = "GamesForums"
 CONFIG_GAMES_TAGS = "GamesTags"
+CONFIG_GAMES_VISIBILITY = "GamesVisibility"
 
 EMOJI_JOIN = "👍"
 EMOJI_NOTIFY = "🔔"
@@ -50,9 +50,9 @@ class matchmaking(commands.Cog):
         # self.threads = []
         # self.refresh_threads.start()
 
-    def cog_unload(self):
+    async def cog_unload(self):
         # self.refresh_threads.cancel()
-        super().cog_unload()
+        await super().cog_unload()
 
     def get_configured_games(self, guild_id, *args):
         guild = common.get_guild_from_config(self.config, guild_id)
@@ -90,18 +90,18 @@ class matchmaking(commands.Cog):
 
         games, gamesNames = self.get_configured_games(ctx.guild.id, CONFIG_GAMES_COMMANDS, CONFIG_GAMES_NAMES)
 
-        commands_list = []
-        align = len(max(games, key=len))
-        for game in games:
-            index = games.index(game)
-            command_text = "• `"
-            command_text += game
-            command_text += " " * (align-len(game)) + "`"
-            if (len(gamesNames) == len(games) and len(gamesNames[index])):
-                command_text += "  : pour "
-                command_text += "**" + gamesNames[index] + "**"
-            command_text += "\n"
-            commands_list.append(command_text)
+            commands_list = []
+            align = len(max(games, key=len))
+            for game in games:
+                index = games.index(game)
+                command_text = "• `"
+                command_text += game
+                command_text += " " * (align-len(game)) + "`"
+                if (len(gamesNames) == len(games) and len(gamesNames[index])):
+                    command_text += "  : pour "
+                    command_text += "**" + gamesNames[index] + "**"
+                command_text += "\n"
+                commands_list.append(command_text)
 
         embed = discord.Embed(description="".join(commands_list))
 
@@ -225,14 +225,18 @@ class matchmaking(commands.Cog):
         if (message.author.id != self.bot.user.id):
             return False
 
-        title = ""
-        if (len(message.embeds)):
-            title = str(message.embeds[0].title)
+        if (not(len(message.embeds))):
+            return False
+
+        embed = message.embeds[0]
+        title = str(embed.title)
         if (not(title.startswith("Qui pour"))):
+            return False
+        footer = embed.footer.text
+        if (footer.startswith("Table complète !")):
             return False
 
         # Recover target role and host
-        embed = message.embeds[0]
         fields = embed.fields
         host = ""
         target = ""
@@ -249,7 +253,7 @@ class matchmaking(commands.Cog):
         players = []
         users_to_notify = []
         for reaction in message.reactions:
-            reaction_users = await reaction.users().flatten()
+            reaction_users = {reaction_user async for reaction_user in reaction.users()}
             if ((self.bot.user not in reaction_users) \
                 and (str(reaction) in EMOJIS_VALID)):
                 return False # Game already closed, reactions cleaned
@@ -258,20 +262,25 @@ class matchmaking(commands.Cog):
                 players = reaction_users
             if str(reaction) == EMOJI_NOTIFY:
                 users_to_notify = reaction_users
-        guests = ""
+                users_to_notify.discard(user)
+        guests_mentions = ""
+        guests_full = ""
         for player in players:
             if (player.mention == host):
                 continue
-            if (len(guests)):
-                guests += ", "
-            guests += player.mention
+            if (len(guests_mentions)):
+                guests_mentions += ", "
+            if (len(guests_full)):
+                guests_full += ", "
+            guests_mentions += player.mention
+            guests_full += player.display_name + " (" + player.mention + ")"
 
         if (emoji_name == EMOJI_JOIN and user.mention != host):
             embed.clear_fields()
             if (len(target)):
                 embed.add_field(name="Joueurs", value=target, inline=True)
             embed.add_field(name="Hôte", value=host, inline=True)
-            if (len(guests)):
+            if (len(guests_full)):
                 embed.add_field(name ="Participants", value=guests, inline=False)
             try:
                 await message.edit(embed=embed)
@@ -279,26 +288,7 @@ class matchmaking(commands.Cog):
                 print(error)
 
             if (user in players):
-                for user_to_notify in users_to_notify:
-                    if (user_to_notify == user):
-                        continue
-                    message_to_send = "Un joueur (" + str(user) + ")"
-                    message_to_send += " a rejoint la partie"
-                    message_to_send += " dans "
-                    message_to_send += channel.mention + ".\n"
-                    if (user_to_notify.mention == host):
-                        message_to_send += "Quand la table est complète,"
-                        message_to_send += " ouvre un fil de discussion avec "
-                        message_to_send += EMOJI_START + ", tous les joueurs "
-                        message_to_send += "y seront @mentionnés. GLHF!"
-                    else:
-                        message_to_send += "Tu seras @mentionné "
-                        message_to_send += "quand la partie pourra démarrer. GLHF!"
-                    try:
-                        await user_to_notify.send(message_to_send)
-                    except Exception as e:
-                        print(e)
-                        print("MP impossible " + str(user_to_notify))
+                await self.notify_players(channel, host, user, users_to_notify)
 
         if (str(payload.emoji.name) in EMOJIS_CLOSE and user.mention == host):
             emoji_url = payload.emoji.url
@@ -311,77 +301,119 @@ class matchmaking(commands.Cog):
             except Exception as error:
                 print(error)
 
-            # New feature: create thread
-            # 3 cases: a) Do nothing if this message already has a thread
-            #          b) Create thread in a (forum) channel if available
-            #          c) Create thread under this message otherwise
-            if (str(payload.emoji.name) == EMOJI_START and message.thread is None):
-                gamesRoles, gamesForums, gamesTags = \
-                self.get_configured_games(payload.guild_id, \
-                                          CONFIG_GAMES_ROLES, \
-                                          CONFIG_GAMES_FORUMS, \
-                                          CONFIG_GAMES_TAGS)
-                nbGames = len(gamesForums)
-                index = -1
-                if (nbGames and nbGames == len(gamesRoles) and target in gamesRoles):
-                    index = gamesRoles.index(target)
+            if (str(payload.emoji.name) == EMOJI_START and \
+                message.guild.get_channel_or_thread(message.id) is None):
+                await self.create_game_thread(channel, message,
+                                              target, host, guests_mentions, embed)
 
-                thread_channel = channel
-                parent_message = message
-                thread_in_forum = False
-                thread_pings = host
-                if (len(guests)):
-                    thread_pings += ", " + guests
-                thread_message = thread_pings + ", "
-                thread_message += "la partie peut démarrer ! GLHF!"
 
-                # Thread title = embed description without custom emojis
-                thread_title = embed.description
-                thread_title = common.clean_thread_title(thread_title, self.custom_emoji_re)
-                # if (len(thread_title)):
-                #     thread_title = "".join(self.custom_emoji_re.split(thread_title))
-                # if (len(thread_title) > 100): # discord refuses thread if title too long
-                #     thread_title = thread_title[:100]
-                # if (not(len(thread_title))):
-                #     thread_title = "Game thread"
+    async def notify_players(self, channel, host, new_player, users_to_notify):
+        for user_to_notify in users_to_notify:
+            message_to_send = "Un joueur (" + str(user) + ")"
+            message_to_send += " a rejoint la partie"
+            message_to_send += " dans "
+            message_to_send += channel.mention + ".\n"
+            if (user_to_notify.mention == host):
+                message_to_send += "Quand la table est complète,"
+                message_to_send += " ouvre un fil de discussion avec "
+                message_to_send += EMOJI_START + ", tous les joueurs "
+                message_to_send += "y seront @mentionnés. GLHF!"
+            else:
+                message_to_send += "Tu seras @mentionné "
+                message_to_send += "quand la partie pourra démarrer. GLHF!"
+            try:
+                await user_to_notify.send(message_to_send)
+            except Exception as e:
+                print(e)
+                print("MP impossible " + str(user_to_notify))
 
-                keywords = {}
-                keywords['name'] = thread_title
+    async def create_game_thread(self, channel, message,
+                                 target, host, guests, embed):
+        # New feature: create thread
+        # 3 cases: a) Do nothing if this message already has a thread
+        #          b) Create thread in a (forum) channel if available
+        #          c) Create thread under this message otherwise
 
-                if (index >= 0 and index < nbGames):
-                    forum_id = gamesForums[index]
-                    forum = None
-                    tag_name = ""
-                    if (nbGames == len(gamesTags)):
-                        tag_name = gamesTags[index]
-                    if (len(forum_id)):
-                        forum = self.bot.get_channel(int(forum_id))
-                    if (forum is not None):
-                        thread_in_forum = True
-                        thread_channel = forum
-                        thread_embed = embed.copy()
-                        thread_embed.remove_footer()
-                        thread_tag = None
-                        if (len(tag_name)):
-                            for forum_tag in forum.available_tags:
-                                if (forum_tag.name == tag_name):
-                                    thread_tag = forum_tag
-                        if (thread_tag is not None):
-                            keywords['applied_tags'] = [thread_tag]
-                        keywords['content'] = thread_message
-                        keywords['embed'] = thread_embed
+        gamesRoles, gamesForums, gamesTags, gamesVisibility = \
+        self.get_configured_games(message.guild.id, \
+                                  CONFIG_GAMES_ROLES, \
+                                  CONFIG_GAMES_FORUMS, \
+                                  CONFIG_GAMES_TAGS,
+                                  CONFIG_GAMES_VISIBILITY)
+        nbGames = len(gamesRoles)
+        index = -1
+        if (nbGames and len(target) and target in gamesRoles):
+            index = gamesRoles.index(target)
 
+        thread_channel = channel
+        parent_message = message
+        thread_in_forum = False
+        thread_pings = host
+        if (len(guests)):
+            thread_pings += ", " + guests
+        thread_message = thread_pings + ", "
+        thread_message += "la partie peut démarrer ! GLHF!"
+        thread_embed = None
+
+        # Thread title = embed description without custom emojis
+        thread_title = embed.description
+        if (thread_title is None or not(len(thread_title))):
+            thread_title = embed.title
+        thread_title = common.clean_thread_title(thread_title, self.custom_emoji_re)
+        thread_visibility = True
+        thread_tag = None
+
+        keywords = {}
+        keywords['name'] = thread_title
+
+        forum_id = ""
+        if (index >= 0 and nbGames == len(gamesForums)):
+            forum_id = gamesForums[index]
+        forum = None
+        tag_name = ""
+        if (index >= 0 and nbGames == len(gamesTags)):
+            tag_name = gamesTags[index]
+        if (len(forum_id)):
+            forum = self.bot.get_channel(int(forum_id))
+        if (forum is not None):
+            thread_in_forum = True
+            thread_channel = forum
+            if (len(tag_name)):
+                for forum_tag in forum.available_tags:
+                    if (forum_tag.name == tag_name):
+                        thread_tag = forum_tag
+        if (index >= 0 and nbGames == len(gamesVisibility)):
+            visibility = gamesVisibility[index]
+            if (len(visibility) and int(visibility) == 0):
+                thread_visibility = False
+
+        thread_has_parent = not(thread_in_forum) and thread_visibility
+        if (not(thread_has_parent)):
+            thread_embed = embed.copy()
+            thread_embed.remove_footer()
+        if (thread_in_forum):
+            if (thread_tag is not None):
+                keywords['applied_tags'] = [thread_tag]
+            keywords['content'] = thread_message
+            keywords['embed'] = thread_embed
+        if(thread_has_parent):
+            keywords['message'] = parent_message
+        if (not(thread_visibility)):
+            keywords['type'] = discord.ChannelType.private_thread
+
+        try:
+            thread = await thread_channel.create_thread(**keywords)
+            if (thread_in_forum):
+                thread, _ = thread
+            if (thread is not None):
                 if (not(thread_in_forum)):
-                    keywords['type'] = discord.ChannelType.private_thread
+                    await thread.send(content=thread_message, embed=thread_embed)
+                embed.url = thread.jump_url
+                await message.edit(embed=embed)
+        except Exception as e:
+            print(e)
 
-                try:
-                    thread = await thread_channel.create_thread(**keywords)
-                    if (not(thread_in_forum)):
-                        await thread.send(content=thread_message)
-                except Exception as e:
-                    print(e)
-
-def setup(bot):
+async def setup(bot):
     config = configparser.ConfigParser()
     config.read('config/games.ini')
-    bot.add_cog(matchmaking(bot, config))
+    await bot.add_cog(matchmaking(bot, config))
