@@ -90,18 +90,18 @@ class matchmaking(commands.Cog):
 
         games, gamesNames = self.get_configured_games(ctx.guild.id, CONFIG_GAMES_COMMANDS, CONFIG_GAMES_NAMES)
 
-            commands_list = []
-            align = len(max(games, key=len))
-            for game in games:
-                index = games.index(game)
-                command_text = "• `"
-                command_text += game
-                command_text += " " * (align-len(game)) + "`"
-                if (len(gamesNames) == len(games) and len(gamesNames[index])):
-                    command_text += "  : pour "
-                    command_text += "**" + gamesNames[index] + "**"
-                command_text += "\n"
-                commands_list.append(command_text)
+        commands_list = []
+        align = len(max(games, key=len))
+        for game in games:
+            index = games.index(game)
+            command_text = "• `"
+            command_text += game
+            command_text += " " * (align-len(game)) + "`"
+            if (len(gamesNames) == len(games) and len(gamesNames[index])):
+                command_text += "  : pour "
+                command_text += "**" + gamesNames[index] + "**"
+            command_text += "\n"
+            commands_list.append(command_text)
 
         embed = discord.Embed(description="".join(commands_list))
 
@@ -281,7 +281,7 @@ class matchmaking(commands.Cog):
                 embed.add_field(name="Joueurs", value=target, inline=True)
             embed.add_field(name="Hôte", value=host, inline=True)
             if (len(guests_full)):
-                embed.add_field(name ="Participants", value=guests, inline=False)
+                embed.add_field(name ="Participants", value=guests_full, inline=False)
             try:
                 await message.edit(embed=embed)
             except Exception as error:
@@ -325,7 +325,7 @@ class matchmaking(commands.Cog):
                 await user_to_notify.send(message_to_send)
             except Exception as e:
                 print(e)
-                print("MP impossible " + str(user_to_notify))
+                print("tentative de DM échouée " + str(user_to_notify))
 
     async def create_game_thread(self, channel, message,
                                  target, host, guests, embed):
