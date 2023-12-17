@@ -61,13 +61,6 @@ def parse_intervals(string, cardinal):
     
     return value_list
 
-def indefinite_article(word):
-    article = "a"
-    vowels = ['a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U']
-    if (len(word) and word[0] in vowels):
-        article = "an"
-    return article
-
 def get_default_emoji_url(emoji):
     emoji_id = ord(emoji[0])
     url = f"https://twemoji.maxcdn.com/v/latest/72x72/{emoji_id:x}.png"
