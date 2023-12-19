@@ -309,7 +309,7 @@ class matchmaking(commands.Cog):
 
     async def notify_players(self, channel, host, new_player, users_to_notify):
         for user_to_notify in users_to_notify:
-            message_to_send = "Un joueur (" + str(user) + ")"
+            message_to_send = "Un joueur (" + new_player.display_name + ")"
             message_to_send += " a rejoint la partie"
             message_to_send += " dans "
             message_to_send += channel.mention + ".\n"
@@ -325,7 +325,7 @@ class matchmaking(commands.Cog):
                 await user_to_notify.send(message_to_send)
             except Exception as e:
                 print(e)
-                print("tentative de DM échouée " + str(user_to_notify))
+                print("Failed to DM " + user_to_notify.display_name)
 
     async def create_game_thread(self, channel, message,
                                  target, host, guests, embed):
@@ -356,10 +356,11 @@ class matchmaking(commands.Cog):
         thread_embed = None
 
         # Thread title = embed description without custom emojis
-        thread_title = embed.description
+        thread_title = common.clean_thread_title(embed.description, self.custom_emoji_re)
         if (thread_title is None or not(len(thread_title))):
             thread_title = embed.title
-        thread_title = common.clean_thread_title(thread_title, self.custom_emoji_re)
+        if (thread_title is None or not(len(thread_title))):
+            thread_title = "Game thread"
         thread_visibility = True
         thread_tag = None
 
