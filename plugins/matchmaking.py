@@ -309,7 +309,7 @@ class matchmaking(commands.Cog):
 
     async def notify_players(self, channel, host, new_player, users_to_notify):
         for user_to_notify in users_to_notify:
-            message_to_send = " + new_player.display_name + ")"
+            message_to_send = " + new_player.display_name + "
             message_to_send += " a rejoint la partie"
             message_to_send += " de "
             message_to_send += channel.mention + ".\n"
@@ -318,7 +318,7 @@ class matchmaking(commands.Cog):
                 message_to_send += " ouvre un fil de discussion avec "
                 message_to_send += EMOJI_START + ", tous les joueurs "
                 message_to_send += "y seront @mentionnés."
-                message_to_send += "| Once all participants have joined, "
+                message_to_send += "Once all participants have joined, "
                 message_to_send += "start the game thread with "
                 message_to_send += EMOJI_START + ", each player "
                 message_to_send += "will be pinged there. "
@@ -327,7 +327,7 @@ class matchmaking(commands.Cog):
             else:
                 message_to_send += "Tu seras @mentionné "
                 message_to_send += "quand la partie pourra démarrer."
-                message_to_send += "| You will be pinged "
+                message_to_send += "You will be pinged "
                 message_to_send += "once game starts. GLHF!"
             try:
                 await user_to_notify.send(message_to_send)
