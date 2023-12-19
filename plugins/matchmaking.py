@@ -309,7 +309,7 @@ class matchmaking(commands.Cog):
 
     async def notify_players(self, channel, host, new_player, users_to_notify):
         for user_to_notify in users_to_notify:
-            message_to_send = + new_player.display_name + "
+            message_to_send = + new_player.display_name +
             message_to_send += " a rejoint la partie"
             message_to_send += " de "
             message_to_send += channel.mention + ".\n"
