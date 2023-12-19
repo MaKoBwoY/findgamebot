@@ -323,7 +323,6 @@ class matchmaking(commands.Cog):
                 message_to_send += EMOJI_START + ", each player "
                 message_to_send += "will be pinged there.\n"
                 message_to_send += "GLHF!"
-
             else:
                 message_to_send += "Tu seras @mentionné "
                 message_to_send += "quand la partie pourra démarrer.\n"
