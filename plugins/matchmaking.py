@@ -167,7 +167,7 @@ class matchmaking(commands.Cog):
 
         embed.title = "Qui pour "
         embed.title += "un " + gameWanted + " ?"
-        embed.title = :HRF:"https://hrf.im/"
+        embed.title = "https://hrf.im/"
 
         if (not(len(gameIcon))):
             gameIcon = common.DEFAULT_AVATAR_URL
