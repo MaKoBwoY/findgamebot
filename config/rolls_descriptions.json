@@ -30,6 +30,12 @@
       "category":"Map"
    },
    {
+      "title":"Tundra",
+      "thumbnail": {"url": "https://i.imgur.com/HPbylev.png"},
+      "color": 13686259,
+      "category":"Map"
+   },
+   {
       "title":"Ranger",
       "image": {"url": "https://rootcards.seiyria.com/assets/cards/vagabond-ranger.webp"},
       "thumbnail": {"url": "https://i.imgur.com/s9JfzHu.png"},
