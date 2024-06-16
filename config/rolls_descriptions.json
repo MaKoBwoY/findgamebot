@@ -36,6 +36,12 @@
       "category":"Map"
    },
    {
+      "title":"Gloom",
+      "thumbnail": {"url": "https://i.imgur.com/OZvgvRG.png"},
+      "color": 2974290,
+      "category":"Map"
+   },
+   {
       "title":"Ranger",
       "image": {"url": "https://rootcards.seiyria.com/assets/cards/vagabond-ranger.webp"},
       "thumbnail": {"url": "https://i.imgur.com/s9JfzHu.png"},
