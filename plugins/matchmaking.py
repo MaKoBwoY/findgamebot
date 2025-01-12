@@ -77,16 +77,16 @@ class matchmaking(commands.Cog):
         print("Refreshed threads:\n", self.threads)
 
     async def lfg_help(self, ctx):
-        text = "Pour annoncer une nouvelle partie :\n"
+        text = "To start a new game:\n"
         text += "\n"
         text += "`" + ctx.prefix + LFG_COMMAND
         text += " <mode> <description>`\n"
-        text += "ou\n"
+        text += "or\n"
         text += "`" + ctx.prefix + LFG_COMMAND
-        text += " <description> @mention @mention @mention` (pour inviter des joueurs)\n"
+        text += " <description> @mention @mention @mention` (to invite specific players)\n"
         text += "\n"
-        text += "remplace  `<mode>`  par l'un des 2 modes de jeu ci-dessous\n"
-        text += "et  `<description>`  par tes options de jeu ou toute autre info\n"
+        text += "replace  `<mode>`  by one of the games listed below\n"
+        text += "and  `<description>`  by any useful info\n"
 
         games, gamesNames = self.get_configured_games(ctx.guild.id, CONFIG_GAMES_COMMANDS, CONFIG_GAMES_NAMES)
 
