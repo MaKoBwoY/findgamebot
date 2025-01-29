@@ -167,7 +167,7 @@ class matchmaking(commands.Cog):
 
         embed.title = "Qui pour "
         embed.title += "un " + gameWanted + " ?\n"
-        embed.title += "https://hrf.im/"
+        embed.title += "https://discord.gg/ffzPP8WSNq"
 
         if (not(len(gameIcon))):
             gameIcon = common.DEFAULT_AVATAR_URL
